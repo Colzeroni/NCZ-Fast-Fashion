@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrendyStyle Shop & EthicScan - Fast Fashion Les Zedenleer 1A</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            purple: '#8b5cf6',
+                            hotpink: '#ec4899',
+                            dark: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar & animations */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        @keyframes float-short {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        .animate-float {
+            animation: float-short 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- HEADER & FIXED BUDGET BAR -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex items-center justify-between gap-4">
+                
+                <!-- Logo & Subtitle -->
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-tr from-purple-600 to-pink-500 text-white p-2.5 rounded-2xl shadow-md flex items-center justify-center">
+                        <i class="fa-solid fa-bag-shopping text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-slate-900 leading-none">
+                            TrendyStyle <span class="text-xs bg-pink-100 text-pink-700 font-bold px-2 py-0.5 rounded-full ml-1">BOUTIQUE</span>
+                        </h1>
+                        <p class="text-xs text-slate-500 font-medium">Zedenleer 1A • Thema Fast Fashion & Ethiek</p>
+                    </div>
+                </div>
+
+                <!-- Budget Display (Top Counter) -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <div id="budget-card" class="bg-slate-900 text-white px-3.5 sm:px-4 py-2 rounded-2xl shadow-inner flex items-center gap-3 border-2 border-emerald-500 transition-all duration-300">
+                        <div class="text-emerald-400 text-lg sm:text-xl">
+                            <i class="fa-solid fa-wallet"></i>
+                        </div>
+                        <div>
+                            <div class="text-[10px] uppercase tracking-wider font-semibold text-slate-400">Beschikbaar Budget</div>
+                            <div class="text-base sm:text-xl font-black text-emerald-400 leading-tight">
+                                €<span id="budget-remaining">400.00</span> 
+                                <span class="text-xs text-slate-400 font-normal hidden sm:inline">/ €400</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cart Toggle Button -->
+                    <button id="cart-toggle-btn" onclick="toggleCartModal()" class="relative bg-purple-600 hover:bg-purple-700 text-white font-semibold px-4 py-2.5 rounded-2xl shadow-md hover:shadow-lg transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span class="hidden sm:inline text-sm font-bold">Winkelmand</span>
+                        <span id="cart-count-badge" class="bg-pink-500 text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Budget Progress Bar -->
+        <div class="w-full bg-slate-200 h-1.5 overflow-hidden">
+            <div id="budget-progress-bar" class="bg-gradient-to-r from-emerald-500 via-yellow-400 to-pink-500 h-full w-full transition-all duration-500"></div>
+        </div>
+    </header>
+
+    <!-- MAIN APP CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- VIEW 1: SHOPPING CATALOG VIEW -->
+        <div id="shop-view" class="space-y-6">
+            
+            <!-- Banner / Intro Callout -->
+            <div class="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl font-black">FASHION</div>
+                <div class="relative z-10 max-w-2xl space-y-3">
+                    <span class="bg-pink-500/30 text-pink-300 border border-pink-400/30 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider inline-flex items-center gap-1.5">
+                        <i class="fa-solid fa-store"></i> Welkom bij TrendyStyle Store
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight">
+                        Stel jouw droom-garderobe samen!
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Je hebt een winkelbudget van <strong class="text-emerald-400">€400</strong> gekregen. Kies jouw favoriete kleren, schoenen en accessoires. Koop je heel veel goedkope spullen, ga je voor dure merkkleding, of kies je iets anders? 
+                    </p>
+                </div>
+            </div>
+
+            <!-- Filters & Sorting Controls -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-200">
+                
+                <!-- Category Filters -->
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 no-scrollbar" id="category-filters">
+                    <button onclick="setCategory('all')" class="cat-btn active border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-white border-slate-900" data-cat="all">
+                        <i class="fa-solid fa-border-all mr-1"></i> Alles
+                    </button>
+                    <button onclick="setCategory('tshirts')" class="cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100" data-cat="tshirts">
+                        <i class="fa-solid fa-shirt mr-1"></i> T-Shirts & Tops
+                    </button>
+                    <button onclick="setCategory('jackets')" class="cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100" data-cat="jackets">
+                        <i class="fa-solid fa-user-ninja mr-1"></i> Hoodies & Jassen
+                    </button>
+                    <button onclick="setCategory('pants')" class="cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100" data-cat="pants">
+                        <i class="fa-solid fa-note-sticky mr-1"></i> Broeken & Jeans
+                    </button>
+                    <button onclick="setCategory('shoes')" class="cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100" data-cat="shoes">
+                        <i class="fa-solid fa-shoe-prints mr-1"></i> Schoenen & Sneakers
+                    </button>
+                    <button onclick="setCategory('acc')" class="cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100" data-cat="acc">
+                        <i class="fa-solid fa-hat-cowboy mr-1"></i> Accessoires
+                    </button>
+                </div>
+
+                <!-- Sort Selector -->
+                <div class="flex items-center gap-2 self-end md:self-auto">
+                    <span class="text-xs font-medium text-slate-500 whitespace-nowrap">Sorteren op:</span>
+                    <select id="sort-select" onchange="renderProducts()" class="bg-slate-100 border border-slate-200 text-slate-800 text-xs rounded-xl px-3 py-2 font-semibold focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <option value="featured">Populair & Aanbevolen</option>
+                        <option value="price-asc">Prijs: Laag ➔ Hoog</option>
+                        <option value="price-desc">Prijs: Hoog ➔ Laag</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- Product Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Dynamically populated products with realistic photos -->
+            </div>
+
+        </div>
+
+        <!-- VIEW 2: ETHICSCAN ANALYSIS DASHBOARD (REVEAL AFTER CHECKOUT) -->
+        <div id="ethics-view" class="hidden space-y-8">
+            
+            <!-- EthicScan Top Header -->
+            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden border border-slate-800">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                            <i class="fa-solid fa-leaf"></i> EthicScan Rapport Zedenleer 1A
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight">
+                            De Echte Prijs Van Jouw Kleerkast 🔍
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Je hebt net afgerekend! Maar wat kost jouw kledingkeuze écht aan onze planeet en aan de mensen die jouw kleren maken? Bekijk de analyse van jouw winkelmandje hieronder.
+                        </p>
+                    </div>
+
+                    <!-- Overall Score Badge Card -->
+                    <div class="bg-slate-800/90 border border-slate-700 p-6 rounded-3xl flex flex-col items-center justify-center text-center min-w-[220px] shadow-xl">
+                        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-400 mb-1">Totale Ethiek Score</span>
+                        <div id="overall-grade" class="text-6xl font-black mb-1">C</div>
+                        <span id="overall-grade-label" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-700 text-slate-200">Matig Onethisch</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Impact Metrics (4 Cards) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                
+                <!-- Water Usage -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-sky-600">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Waterverbruik</span>
+                        <i class="fa-solid fa-droplet text-2xl"></i>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="stat-water">0 Liter</div>
+                    <p class="text-xs text-slate-500" id="stat-water-desc">Zoetwater nodig voor teelt van katoen en verfprocessen.</p>
+                </div>
+
+                <!-- Sweatshop Hours -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-rose-600">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Sweatshop Werkuren</span>
+                        <i class="fa-solid fa-stopwatch text-2xl"></i>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="stat-hours">0 Uur</div>
+                    <p class="text-xs text-slate-500">Geschat aantal uur gewerkt tegen hongerloon (&lt;€1/uur).</p>
+                </div>
+
+                <!-- Labor Score -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-amber-600">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Eerlijk Loon Score</span>
+                        <i class="fa-solid fa-people-carry-box text-2xl"></i>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="stat-labor">0% Eerlijk</div>
+                    <p class="text-xs text-slate-500">Percentage van je winkelmand gemaakt onder veilige omstandigheden.</p>
+                </div>
+
+                <!-- Total Spent -->
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-2">
+                    <div class="flex items-center justify-between text-purple-600">
+                        <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Totaal Besteed</span>
+                        <i class="fa-solid fa-receipt text-2xl"></i>
+                    </div>
+                    <div class="text-2xl font-black text-slate-900" id="stat-spent">€0.00</div>
+                    <p class="text-xs text-slate-500">Je hebt in totaal <span id="stat-items-count" class="font-bold">0</span> artikel(en) gekocht.</p>
+                </div>
+
+            </div>
+
+            <!-- 5-Tier Ethical Scale Legend -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <h3 class="font-extrabold text-slate-900 text-lg flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-purple-600"></i> De 5 Gradaties Van Kleding (Ethiekladder)
+                </h3>
+                <div class="grid grid-cols-1 sm:grid-cols-5 gap-3">
+                    <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-xs space-y-1">
+                        <div class="font-black text-rose-700 flex items-center gap-1">🔴🔴 Tier 1</div>
+                        <div class="font-bold text-slate-900">Extreem Onethisch</div>
+                        <p class="text-slate-600 text-[11px] leading-tight">Sweatshops, kinderarbeid, toxische verf, minder dan €0,80/uur.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-orange-50 border border-orange-200 text-xs space-y-1">
+                        <div class="font-black text-orange-700 flex items-center gap-1">🔴 Tier 2</div>
+                        <div class="font-bold text-slate-900">Fast Fashion</div>
+                        <p class="text-slate-600 text-[11px] leading-tight">Synthetisch plastic, overproductie, 800% merk-opslag, lage lonen.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-xs space-y-1">
+                        <div class="font-black text-amber-700 flex items-center gap-1">🟡 Tier 3</div>
+                        <div class="font-bold text-slate-900">Conventioneel</div>
+                        <p class="text-slate-600 text-[11px] leading-tight">Standaard merken, basisveiligheid, matige transparantie.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-xs space-y-1">
+                        <div class="font-black text-emerald-700 flex items-center gap-1">🟢 Tier 4</div>
+                        <div class="font-bold text-slate-900">Duurzaam Bewust</div>
+                        <p class="text-slate-600 text-[11px] leading-tight">Biologisch katoen, gerecycleerd, gegarandeerd leefbaar loon.</p>
+                    </div>
+                    <div class="p-3.5 rounded-2xl bg-teal-50 border border-teal-200 text-xs space-y-1">
+                        <div class="font-black text-teal-700 flex items-center gap-1">🟢✨ Tier 5</div>
+                        <div class="font-bold text-slate-900">Fair Trade Leader</div>
+                        <p class="text-slate-600 text-[11px] leading-tight">100% Fairtrade, circulair, herstelgarantie, zero chemicaliën.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Individual Purchased Items Breakdown -->
+            <div class="space-y-4">
+                <h3 class="font-extrabold text-slate-900 text-xl flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass-chart text-emerald-600"></i> Detailanalyse Van Gekochte Kleding
+                </h3>
+                <div id="ethics-items-list" class="space-y-5">
+                    <!-- Dynamically populated analysis cards with photos -->
+                </div>
+            </div>
+
+            <!-- DIDACTIC CLASSROOM DISCUSSION SECTION (ZEDENLEER 1A) -->
+            <div class="bg-gradient-to-br from-indigo-900 via-purple-900 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-indigo-800 space-y-6">
+                <div class="flex items-center gap-4">
+                    <div class="bg-yellow-400 text-slate-900 font-extrabold p-3.5 rounded-2xl text-2xl shadow-lg">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl sm:text-3xl font-black">Klasgesprek Zedenleer 1A</h3>
+                        <p class="text-slate-300 text-xs sm:text-sm">Bespreek samen met de klasgenoten en leerkracht de volgende vragen:</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <!-- Question 1 -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/15 space-y-3">
+                        <div class="text-xs font-extrabold text-yellow-400 uppercase tracking-wider">Vraag 1 • Keuzes & Druk</div>
+                        <h4 class="font-bold text-base text-white">Waarop keek jij het meeste toen je kleren koos?</h4>
+                        <p class="text-slate-300 text-xs leading-relaxed">Keek je vooral naar het merk, hoe cool de foto eruitzag, of hoeveel stuks je kon kopen met je €400 budget?</p>
+                    </div>
+
+                    <!-- Question 2 -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/15 space-y-3">
+                        <div class="text-xs font-extrabold text-yellow-400 uppercase tracking-wider">Vraag 2 • De Illusie van Dure Merken</div>
+                        <h4 class="font-bold text-base text-white">Was je verrast door de hele dure merkkleding?</h4>
+                        <p class="text-slate-300 text-xs leading-relaxed">Een designer hoodie van €150 wordt soms in exact dezelfde sweatshop gemaakt als een t-shirt van €4. Waarom vragen bekende merken daar zo'n hoge prijs voor?</p>
+                    </div>
+
+                    <!-- Question 3 -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/15 space-y-3">
+                        <div class="text-xs font-extrabold text-yellow-400 uppercase tracking-wider">Vraag 3 • De Echte Prijs</div>
+                        <h4 class="font-bold text-base text-white">Wie betaalt de echte prijs bij goedkope Fast Fashion?</h4>
+                        <p class="text-slate-300 text-xs leading-relaxed">Als jij een t-shirt van €3,99 koopt, wie draagt dan het verlies? Denk aan de fabrieksarbeiders, de lokale rivieren en de katoenboeren.</p>
+                    </div>
+
+                    <!-- Question 4 -->
+                    <div class="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/15 space-y-3">
+                        <div class="text-xs font-extrabold text-yellow-400 uppercase tracking-wider">Vraag 4 • Wat Kunnen Wij Doen?</div>
+                        <h4 class="font-bold text-base text-white">Welke acties kunnen we in het dagelijks leven nemen?</h4>
+                        <p class="text-slate-300 text-xs leading-relaxed">Denk aan kleding ruilen met vrienden, tweedehands kopen (Vinted, Kringloop), kleding laten herstellen, of minder vaak nieuwe stuks kopen.</p>
+                    </div>
+
+                </div>
+
+                <!-- Teacher Expandable Accordion -->
+                <div class="bg-black/30 rounded-2xl p-4 border border-white/10 space-y-2">
+                    <button onclick="toggleTeacherTips()" class="w-full flex items-center justify-between text-left text-xs font-bold text-yellow-300 hover:text-yellow-200">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-chalkboard-user"></i> Didactische Handleiding & Gesprekstips voor de Leerkracht
+                        </span>
+                        <i id="teacher-accordion-icon" class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div id="teacher-tips-content" class="hidden text-xs text-slate-300 space-y-2 pt-2 border-t border-white/10">
+                        <p><strong>Doelstellingen 1A Zedenleer:</strong> Bewustwording creëren rond consumptiegedrag, kritisch denken stimuleren over reclame & merkkleding, en empathie opbouwen met arbeiders in ontwikkelingslanden.</p>
+                        <p><strong>Aanbevolen verloop:</strong> Laat de leerlingen 10 minuten vrij shoppen zonder vooraf te verklappen dat er een ethische score volgt. Gebruik hun verbaasde reacties bij het zien van de 'Echte Prijs' als vertrekpunt voor de klasdiscussie.</p>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex flex-wrap items-center justify-between gap-4 border-t border-indigo-800/80">
+                    <button onclick="resetShop()" class="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-extrabold px-6 py-3.5 rounded-2xl shadow-lg transition-all flex items-center gap-2 hover:scale-105">
+                        <i class="fa-solid fa-rotate-left"></i> Opnieuw Winkelen Met Een Nieuw Plan
+                    </button>
+                    <span class="text-xs text-slate-400 font-medium">Onderwijs Vlaanderen • Zedenleer 1A Secundair</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- SHOPPING CART MODAL SIDEBAR / OVERLAY -->
+    <div id="cart-modal" class="fixed inset-0 z-50 hidden overflow-hidden bg-slate-900/60 backdrop-blur-sm">
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+                
+                <!-- Cart Header -->
+                <div class="p-5 bg-slate-900 text-white flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-cart-shopping text-pink-500 text-xl"></i>
+                        <h3 class="font-extrabold text-lg">Jouw Winkelmandje</h3>
+                    </div>
+                    <button onclick="toggleCartModal()" class="text-slate-400 hover:text-white text-xl p-1">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="flex-grow overflow-y-auto p-5 space-y-4">
+                    <!-- Dynamic cart items rendered here -->
+                </div>
+
+                <!-- Cart Footer Summary & Checkout -->
+                <div class="p-5 border-t border-slate-200 bg-slate-50 space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm text-slate-600">
+                            <span>Subtotaal:</span>
+                            <span class="font-semibold" id="cart-subtotal">€0.00</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-slate-600">
+                            <span>Resterend Budget:</span>
+                            <span class="font-semibold text-emerald-600" id="cart-remaining-budget">€400.00</span>
+                        </div>
+                        <div class="flex justify-between text-base font-black text-slate-900 pt-2 border-t border-slate-200">
+                            <span>Totaal te betalen:</span>
+                            <span class="text-purple-600 text-xl" id="cart-total">€0.00</span>
+                        </div>
+                    </div>
+
+                    <button id="checkout-btn" onclick="triggerCheckout()" class="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 text-base">
+                        <i class="fa-solid fa-credit-card"></i> Afrekenen & Kleren Bestellen
+                    </button>
+                    <p class="text-[11px] text-center text-slate-400">Gratis virtuele verzending inbegrepen!</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- POST-CHECKOUT CONFIRMATION & ETHICAL REVEAL MODAL -->
+    <div id="reveal-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-md">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl text-center space-y-6 transform transition-all animate-float">
+            
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+
+            <div class="space-y-2">
+                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase">Bestelling Geplaatst! 📦</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-slate-900">Je kleren zijn onderweg!</h3>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    Bedankt voor je bestelling bij <strong>TrendyStyle Boutique</strong>. De kleding is ingepakt en de virtuele vrachtwagen is vertrokken.
+                </p>
+            </div>
+
+            <div class="bg-purple-50 border border-purple-200 p-4 rounded-2xl space-y-2 text-left">
+                <div class="flex items-center gap-2 text-purple-800 font-extrabold text-sm">
+                    <i class="fa-solid fa-circle-question text-purple-600"></i> Zedenleer Reflectiewraag:
+                </div>
+                <p class="text-xs text-slate-700 font-medium leading-relaxed">
+                    Wil je ontdekken wat de <strong>echte prijs</strong> is van de kleren die je net hebt gekocht? (Hoe zijn ze gemaakt en wat is de impact op mens en natuur?)
+                </p>
+            </div>
+
+            <div class="space-y-2 pt-2">
+                <button onclick="showEthicScan()" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-600 text-white font-extrabold py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2 text-base">
+                    <i class="fa-solid fa-magnifying-glass"></i> Ja, toon mij de Echte Prijs! 🔍
+                </button>
+                <button onclick="closeRevealModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-2.5 rounded-xl text-xs transition-all">
+                    Nog even aanpassen in de winkel 🛒
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- APP LOGIC & REAL FASHION DATA SCRIPT -->
+    <script>
+        // ==========================================
+        // 1. DATA CATALOG (25 ITEMS WITH REAL PHOTOS)
+        // ==========================================
+        const clothingCatalog = [
+            // TIER 1: Ultra Unethical Fast Fashion / Sweatshops
+            {
+                id: 1,
+                name: "Basic Ultra Cheap White Tee",
+                category: "tshirts",
+                price: 3.99,
+                badge: "ULTRA CHEAP ⚡",
+                badgeColor: "bg-red-500",
+                img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500&auto=format&fit=crop&q=80",
+                tier: 1,
+                material: "100% Goedkoop Synthetisch Polyester",
+                country: "Bangladesh (Rana Plaza-stijl fabriek)",
+                wage: "€0,65 / uur",
+                water: 2700,
+                sweatHours: 3.5,
+                facts: "Voor dit t-shirt van amper €3,99 werken jonge vrouwen in Bangladesh tot 14 uur per dag in levensgevaarlijke fabrieken zonder airco of nooduitgang."
+            },
+            {
+                id: 2,
+                name: "HypeBeast Oversized Hoodie",
+                category: "jackets",
+                price: 149.99,
+                badge: "HYPE BRAND 💎",
+                badgeColor: "bg-purple-600",
+                img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=500&auto=format&fit=crop&q=80",
+                tier: 1,
+                material: "Katoen mix met toxische verfstoffen",
+                country: "Myanmar (Sweatshop)",
+                wage: "€0,80 / uur",
+                water: 4500,
+                sweatHours: 6.0,
+                facts: "Een heel duur trendy merk! Maar de echte productiekost was amper €4,50. De overige €145 gaat naar reclame op TikTok en winst voor het merk, NIET naar de maker."
+            },
+            {
+                id: 3,
+                name: "Ultra Micro Pink Crop Top",
+                category: "tshirts",
+                price: 4.99,
+                badge: "TRENDING 🔥",
+                badgeColor: "bg-pink-500",
+                img: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=500&auto=format&fit=crop&q=80",
+                tier: 1,
+                material: "Plastiek Elastaan / Acryl",
+                country: "China (Dwangarbeid regio)",
+                wage: "€0,50 / uur",
+                water: 1800,
+                sweatHours: 2.0,
+                facts: "Na 3 keer wassen pluist dit shirtje al. Het belandt na 1 seizoen op een gigantische kledingafvalberg in de Atacama-woestijn in Chili."
+            },
+            {
+                id: 4,
+                name: "Chunky Neon Street Sneakers",
+                category: "shoes",
+                price: 24.99,
+                badge: "MEGA SALE -70%",
+                badgeColor: "bg-orange-500",
+                img: "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=80",
+                tier: 1,
+                material: "Synthetisch rubber & chemische lijm",
+                country: "Cambodja",
+                wage: "€0,75 / uur",
+                water: 3200,
+                sweatHours: 5.5,
+                facts: "De giftige lijm waarmee deze zolen worden vastgeplakt veroorzaakt ademhalingsziekten bij tienerarbeiders in de fabriek."
+            },
+            {
+                id: 5,
+                name: "Toxic Acid Wash Cargo Pants",
+                category: "pants",
+                price: 12.99,
+                badge: "HOT DEAL 🔥",
+                badgeColor: "bg-red-500",
+                img: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=500&auto=format&fit=crop&q=80",
+                tier: 1,
+                material: "Conventioneel Katoen met Bleekmiddel",
+                country: "Pakistan",
+                wage: "€0,70 / uur",
+                water: 7500,
+                sweatHours: 7.0,
+                facts: "Het chemisch bleken van deze broek zorgt ervoor dat lokale rivieren paars en blauw kleuren. Het drinkwater van hele dorpen wordt daardoor onbruikbaar."
+            },
+
+            // TIER 2: Fast Fashion / Standard Unethical
+            {
+                id: 6,
+                name: "Standard Fast-Fashion Gray Hoodie",
+                category: "jackets",
+                price: 19.99,
+                badge: "POPULAIR ⚡",
+                badgeColor: "bg-blue-500",
+                img: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?w=500&auto=format&fit=crop&q=80",
+                tier: 2,
+                material: "60% Katoen, 40% Polyester",
+                country: "Vietnam",
+                wage: "€1,20 / uur",
+                water: 4000,
+                sweatHours: 4.0,
+                facts: "Kleding zoals deze hoodie zorgt ervoor dat de kledingindustrie jaarlijks meer CO2 uitstoot dan alle internationale vliegtuigen en schepen samen."
+            },
+            {
+                id: 7,
+                name: "Slim Fit Ripped Denim Jeans",
+                category: "pants",
+                price: 22.50,
+                badge: "MUSTHAVE 👖",
+                badgeColor: "bg-indigo-500",
+                img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&auto=format&fit=crop&q=80",
+                tier: 2,
+                material: "Denim met Zandstraal-behandeling",
+                country: "Turkije",
+                wage: "€1,80 / uur",
+                water: 8000,
+                sweatHours: 6.0,
+                facts: "Het 'zandstralen' om de gaten in spijkerbroeken te maken, veroorzaakt ernstige stoflongen bij de arbeiders als er geen stofmaskers worden gebruikt."
+            },
+            {
+                id: 8,
+                name: "Streetwear Designer Baseball Cap",
+                category: "acc",
+                price: 45.00,
+                badge: "BRAND LOGO 🧢",
+                badgeColor: "bg-purple-600",
+                img: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?w=500&auto=format&fit=crop&q=80",
+                tier: 2,
+                material: "100% Synthetisch Polyester",
+                country: "China",
+                wage: "€2,10 / uur",
+                water: 1200,
+                sweatHours: 1.5,
+                facts: "Hoewel je €45 betaalt voor het bekende merklogo op de pet, krijgt de maker in de fabriek minder dan €0,40 per gemaakte pet uitbetaald."
+            },
+            {
+                id: 9,
+                name: "Summer Floral Print Party Dress",
+                category: "tshirts",
+                price: 14.99,
+                badge: "TRENDING ⚡",
+                badgeColor: "bg-pink-500",
+                img: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500&auto=format&fit=crop&q=80",
+                tier: 2,
+                material: "100% Micro-polyester (Plastic)",
+                country: "India",
+                wage: "€1,10 / uur",
+                water: 2100,
+                sweatHours: 3.0,
+                facts: "Bij elke wasbeurt in de wasmachine laat dit kleedje duizenden onzichtbare stukjes microplastic los die via de riool in de vissen en de zee belanden."
+            },
+            {
+                id: 10,
+                name: "Black Puffer Winter Jacket",
+                category: "jackets",
+                price: 39.99,
+                badge: "WINTER SALE ❄️",
+                badgeColor: "bg-cyan-600",
+                img: "https://images.unsplash.com/photo-1544441893-675973e31985?w=500&auto=format&fit=crop&q=80",
+                tier: 2,
+                material: "Nylon & Synthetische Vulling",
+                country: "China",
+                wage: "€2,00 / uur",
+                water: 3500,
+                sweatHours: 5.0,
+                facts: "Aardolie is de grondstof voor de vulling in deze jas. Het duurt meer dan 200 jaar voordat deze jas op de vuilnisbelt volledig afbreekt."
+            },
+
+            // TIER 3: Conventional / Fair Average
+            {
+                id: 11,
+                name: "Classic Vintage Denim Jacket",
+                category: "jackets",
+                price: 59.99,
+                badge: "CLASSIC 👕",
+                badgeColor: "bg-slate-700",
+                img: "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&auto=format&fit=crop&q=80",
+                tier: 3,
+                material: "100% Standaard Katoen",
+                country: "Tunesië",
+                wage: "€3,20 / uur",
+                water: 6000,
+                sweatHours: 0,
+                facts: "Gemaakt in een gecontroleerde fabriek. Maar voor het verbouwen van het katoen werden wel pesticiden gebruikt die schadelijk zijn voor insecten."
+            },
+            {
+                id: 12,
+                name: "Cozy Knit Wool Sweater",
+                category: "jackets",
+                price: 49.99,
+                badge: "BASIC 🧶",
+                badgeColor: "bg-slate-600",
+                img: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500&auto=format&fit=crop&q=80",
+                tier: 3,
+                material: "Wol & Acryl Mix",
+                country: "Roemenië",
+                wage: "€4,50 / uur",
+                water: 3000,
+                sweatHours: 0,
+                facts: "Gemaakt in Europa waar minimumlonen beter gecontroleerd worden. Het acryl is echter nog steeds een vorm van synthetisch plastic."
+            },
+            {
+                id: 13,
+                name: "Casual White Leather Sneakers",
+                category: "shoes",
+                price: 79.99,
+                badge: "KWALITEIT ⭐",
+                badgeColor: "bg-amber-600",
+                img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
+                tier: 3,
+                material: "Conventioneel Runderleer",
+                country: "Portugal",
+                wage: "€5,50 / uur",
+                water: 5000,
+                sweatHours: 0,
+                facts: "Stevige schoenen die lang meegaan. Het loooiproces van leer vereist echter chemische stoffen als er geen ecomethoden worden gebruikt."
+            },
+            {
+                id: 14,
+                name: "Beige Urban Chino Trousers",
+                category: "pants",
+                price: 54.99,
+                badge: "CASUAL 👔",
+                badgeColor: "bg-blue-800",
+                img: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&auto=format&fit=crop&q=80",
+                tier: 3,
+                material: "Katoen met 2% Elastaan",
+                country: "Marokko",
+                wage: "€3,80 / uur",
+                water: 4200,
+                sweatHours: 0,
+                facts: "Gemaakt in fabrieken met normale werktijden. Wel is het onduidelijk waar de ruwe katoen precies vandaan gekomen is."
+            },
+            {
+                id: 15,
+                name: "Sport Windbreaker Jacket",
+                category: "jackets",
+                price: 65.00,
+                badge: "SPORT 🏃",
+                badgeColor: "bg-teal-600",
+                img: "https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&auto=format&fit=crop&q=80",
+                tier: 3,
+                material: "Recycled Polyester Blend",
+                country: "Indonesië",
+                wage: "€3,00 / uur",
+                water: 2000,
+                sweatHours: 0,
+                facts: "Het merk gebruikt al gedeeltelijk gerecycleerd materiaal. Er is een gedragscode voor de fabriek, maar nog geen leefbaar loon."
+            },
+
+            // TIER 4: Sustainable / Eco Conscious
+            {
+                id: 16,
+                name: "Organic Cotton Smile T-Shirt",
+                category: "tshirts",
+                price: 42.00,
+                badge: "BIO & FAIR 🌿",
+                badgeColor: "bg-emerald-600",
+                img: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+                tier: 4,
+                material: "100% Biologisch Katoen (GOTS)",
+                country: "Portugal (Eerlijke Fabriek)",
+                wage: "€9,50 / uur (Leefbaar loon)",
+                water: 1200,
+                sweatHours: 0,
+                facts: "Biologisch katoen verbruikt tot 91% minder water en gebruikt NUL chemische gifstoffen op de akkers. Gezond voor de boer én de natuur!"
+            },
+            {
+                id: 17,
+                name: "Ocean Plastic Recycled Raincoat",
+                category: "jackets",
+                price: 110.00,
+                badge: "OCEAN CLEAN 🌊",
+                badgeColor: "bg-teal-600",
+                img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&auto=format&fit=crop&q=80",
+                tier: 4,
+                material: "100% Gecollecteerd Oceaanplastic",
+                country: "Spanje",
+                wage: "€10,00 / uur",
+                water: 400,
+                sweatHours: 0,
+                facts: "Voor deze jas werden 35 zwerfplastic flessen uit de zee opgevist en omgesmolten tot een hippe waterdichte regenjas!"
+            },
+            {
+                id: 18,
+                name: "Eco Raw Waterless Jeans",
+                category: "pants",
+                price: 95.00,
+                badge: "WATERLESS 💧",
+                badgeColor: "bg-cyan-700",
+                img: "https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=500&auto=format&fit=crop&q=80",
+                tier: 4,
+                material: "Biologisch Katoen & Laserwas",
+                country: "Italië",
+                wage: "€11,00 / uur",
+                water: 900,
+                sweatHours: 0,
+                facts: "Gewone jeans verbruiken 8.000 liter water. Deze broek gebruikt een slimme lasertechniek waardoor 90% minder water nodig is!"
+            },
+            {
+                id: 19,
+                name: "Natural Hemp Comfort Shirt",
+                category: "tshirts",
+                price: 48.00,
+                badge: "ECO HEMP 🌱",
+                badgeColor: "bg-emerald-700",
+                img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500&auto=format&fit=crop&q=80",
+                tier: 4,
+                material: "55% Hennep, 45% Bio-katoen",
+                country: "Griekenland",
+                wage: "€9,00 / uur",
+                water: 600,
+                sweatHours: 0,
+                facts: "Hennep groeit supersnel zonder dat er sproeistoffen nodig zijn en maakt de grond waarin het groeit zelfs gezonder."
+            },
+            {
+                id: 20,
+                name: "Vegan Apple-Leather Sneakers",
+                category: "shoes",
+                price: 120.00,
+                badge: "VEGAN 🌱",
+                badgeColor: "bg-green-600",
+                img: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=500&auto=format&fit=crop&q=80",
+                tier: 4,
+                material: "Appelleer & Natuurrubber",
+                country: "Portugal",
+                wage: "€10,50 / uur",
+                water: 800,
+                sweatHours: 0,
+                facts: "Het 'leer' van deze sneaker is gemaakt van overgebleven klokhuisjes en schillen van appels uit de appelsapindustrie. 100% diervriendelijk!"
+            },
+
+            // TIER 5: Circular & Fairtrade Leaders
+            {
+                id: 21,
+                name: "Fairtrade Bio-Cotton Heavy Sweater",
+                category: "jackets",
+                price: 125.00,
+                badge: "FAIRTRADE 🟢✨",
+                badgeColor: "bg-teal-700",
+                img: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?w=500&auto=format&fit=crop&q=80",
+                tier: 5,
+                material: "100% Fairtrade Bio-katoen",
+                country: "India (Fairtrade Coöperatie)",
+                wage: "€12,00 / uur + Premie",
+                water: 500,
+                sweatHours: 0,
+                facts: "De katoenboeren krijgen een eerlijk loon én een extra Fairtrade-premie om een schooltje en zuiver drinkwater in hun dorp te bouwen."
+            },
+            {
+                id: 22,
+                name: "Belgian Local Wool Parka",
+                category: "jackets",
+                price: 210.00,
+                badge: "CIRCULAIR ♾️",
+                badgeColor: "bg-emerald-800",
+                img: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=500&auto=format&fit=crop&q=80",
+                tier: 5,
+                material: "Lokale Wol & Gratis Herstellingen",
+                country: "België (Lokale atelier)",
+                wage: "€18,00 / uur",
+                water: 300,
+                sweatHours: 0,
+                facts: "Lokaal gemaakt in Vlaanderen! Als de jas ooit kapot gaat, herstelt het merk hem gratis. Is hij versleten? Dan maken ze er weer een nieuwe jas van."
+            },
+            {
+                id: 23,
+                name: "Upcycled Vintage Leather Jacket",
+                category: "jackets",
+                price: 165.00,
+                badge: "UPCYCLED 🔄",
+                badgeColor: "bg-purple-800",
+                img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=500&auto=format&fit=crop&q=80",
+                tier: 5,
+                material: "100% Geredde Vintage Kleding",
+                country: "Nederland / België",
+                wage: "€16,00 / uur",
+                water: 50,
+                sweatHours: 0,
+                facts: "Voor deze jas werd NUL nieuwe grondstof gebruikt. Oude afgedankte jassen werden uit elkaar gehaald en genaaid tot een uniek nieuw kledingstuk!"
+            },
+            {
+                id: 24,
+                name: "Cradle-to-Cradle Linen Shirt",
+                category: "tshirts",
+                price: 75.00,
+                badge: "COMPOSTBAAR 🌱",
+                badgeColor: "bg-lime-700",
+                img: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=500&auto=format&fit=crop&q=80",
+                tier: 5,
+                material: "100% Europees Vlas & Biologische Verf",
+                country: "Frankrijk",
+                wage: "€14,00 / uur",
+                water: 400,
+                sweatHours: 0,
+                facts: "Dit hemd is zo zuiver dat je het na jaren dragen gewoon in de tuin mag begraven. Het wordt in een paar maanden compost voor de planten!"
+            },
+            {
+                id: 25,
+                name: "Circular Lifetime Backpack",
+                category: "acc",
+                price: 85.00,
+                badge: "HERSTELGARANTIE 🔧",
+                badgeColor: "bg-emerald-900",
+                img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=80",
+                tier: 5,
+                material: "Gerecycled Nylon met Eerlijke Label",
+                country: "Duitsland",
+                wage: "€17,00 / uur",
+                water: 250,
+                sweatHours: 0,
+                facts: "Gemaakt om een heel leven mee te gaan. Met een QR-code in de rugzak waarin je precies kunt zien wie jouw tas op welk uur heeft genaaid."
+            }
+        ];
+
+        // ==========================================
+        // 2. STATE MANAGEMENT
+        // ==========================================
+        const INITIAL_BUDGET = 400.00;
+        let cart = []; // Stores objects { item, count }
+        let currentCategory = 'all';
+
+        // ==========================================
+        // 3. CORE SHOPPING FUNCTIONS
+        // ==========================================
+        function getCartTotal() {
+            return cart.reduce((sum, entry) => sum + (entry.item.price * entry.count), 0);
+        }
+
+        function getRemainingBudget() {
+            return INITIAL_BUDGET - getCartTotal();
+        }
+
+        window.onload = function() {
+            renderProducts();
+            updateBudgetUI();
+            updateCartUI();
+        };
+
+        // Render Product Catalog Grid with High-Res Photos
+        function renderProducts() {
+            const container = document.getElementById('products-grid');
+            const sortVal = document.getElementById('sort-select').value;
+            
+            let filtered = clothingCatalog.filter(p => {
+                if (currentCategory === 'all') return true;
+                return p.category === currentCategory;
+            });
+
+            if (sortVal === 'price-asc') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sortVal === 'price-desc') {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+
+            container.innerHTML = '';
+
+            filtered.forEach(product => {
+                const remaining = getRemainingBudget();
+                const isAffordable = remaining >= product.price;
+
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group";
+
+                card.innerHTML = `
+                    <div class="relative bg-slate-100 h-64 overflow-hidden">
+                        <!-- Marketing Badge -->
+                        <span class="absolute top-3 left-3 ${product.badgeColor} text-white text-[10px] font-black px-2.5 py-1 rounded-full uppercase tracking-wider shadow-md z-10">
+                            ${product.badge}
+                        </span>
+
+                        <!-- Real High-Res Product Image -->
+                        <img src="${product.img}" alt="${product.name}" 
+                            onerror="this.src='https://placehold.co/500x500/e2e8f0/475569?text=TrendyStyle'"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">${getCategoryLabel(product.category)}</div>
+                            <h3 class="font-extrabold text-slate-900 text-base group-hover:text-purple-600 transition-colors line-clamp-2">${product.name}</h3>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+                            <div>
+                                <span class="text-[10px] text-slate-400 font-bold block uppercase">Prijs</span>
+                                <span class="text-xl font-black text-slate-900">€${product.price.toFixed(2)}</span>
+                            </div>
+
+                            <button onclick="addToCart(${product.id})" ${!isAffordable ? 'disabled' : ''} 
+                                class="px-4 py-2.5 rounded-2xl font-extrabold text-xs transition-all flex items-center gap-1.5 shadow-md ${
+                                    isAffordable 
+                                    ? 'bg-purple-600 hover:bg-purple-700 text-white hover:scale-105 active:scale-95' 
+                                    : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
+                                }">
+                                <i class="fa-solid ${isAffordable ? 'fa-cart-plus' : 'fa-ban'}"></i>
+                                ${isAffordable ? 'Kopen' : 'Te Duur'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getCategoryLabel(cat) {
+            switch(cat) {
+                case 'tshirts': return 'T-Shirt / Top';
+                case 'jackets': return 'Hoodie / Jas';
+                case 'pants': return 'Broek / Jeans';
+                case 'shoes': return 'Schoenen & Sneakers';
+                case 'acc': return 'Accessoires & Caps';
+                default: return 'Kleding';
+            }
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === cat) {
+                    btn.className = "cat-btn active border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-slate-900 text-white border-slate-900";
+                } else {
+                    btn.className = "cat-btn border px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all bg-white text-slate-700 border-slate-200 hover:bg-slate-100";
+                }
+            });
+            renderProducts();
+        }
+
+        function addToCart(productId) {
+            const product = clothingCatalog.find(p => p.id === productId);
+            if (!product) return;
+
+            if (getRemainingBudget() < product.price) {
+                showToast("Niet genoeg budget meer! ⚠️");
+                return;
+            }
+
+            const existing = cart.find(entry => entry.item.id === productId);
+            if (existing) {
+                existing.count++;
+            } else {
+                cart.push({ item: product, count: 1 });
+            }
+
+            updateBudgetUI();
+            updateCartUI();
+            renderProducts();
+            showToast(`${product.name} toegevoegd! 🛒`);
+        }
+
+        function updateCartQuantity(productId, delta) {
+            const index = cart.findIndex(entry => entry.item.id === productId);
+            if (index > -1) {
+                if (delta > 0) {
+                    if (getRemainingBudget() < cart[index].item.price) {
+                        showToast("Budget overschreden! ⚠️");
+                        return;
+                    }
+                    cart[index].count++;
+                } else {
+                    cart[index].count--;
+                    if (cart[index].count <= 0) {
+                        cart.splice(index, 1);
+                    }
+                }
+            }
+            updateBudgetUI();
+            updateCartUI();
+            renderProducts();
+        }
+
+        function updateBudgetUI() {
+            const remaining = getRemainingBudget();
+            const budgetElem = document.getElementById('budget-remaining');
+            const progressElem = document.getElementById('budget-progress-bar');
+            const cardElem = document.getElementById('budget-card');
+
+            budgetElem.innerText = remaining.toFixed(2);
+            
+            const pct = (remaining / INITIAL_BUDGET) * 100;
+            progressElem.style.width = `${Math.max(0, pct)}%`;
+
+            if (remaining < 50) {
+                cardElem.className = "bg-rose-950 text-white px-3.5 sm:px-4 py-2 rounded-2xl shadow-inner flex items-center gap-3 border-2 border-rose-500 animate-pulse";
+                budgetElem.className = "text-base sm:text-xl font-black text-rose-400 leading-tight";
+            } else if (remaining < 150) {
+                cardElem.className = "bg-slate-900 text-white px-3.5 sm:px-4 py-2 rounded-2xl shadow-inner flex items-center gap-3 border-2 border-amber-500";
+                budgetElem.className = "text-base sm:text-xl font-black text-amber-400 leading-tight";
+            } else {
+                cardElem.className = "bg-slate-900 text-white px-3.5 sm:px-4 py-2 rounded-2xl shadow-inner flex items-center gap-3 border-2 border-emerald-500";
+                budgetElem.className = "text-base sm:text-xl font-black text-emerald-400 leading-tight";
+            }
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const totalElem = document.getElementById('cart-total');
+            const subtotalElem = document.getElementById('cart-subtotal');
+            const remainingElem = document.getElementById('cart-remaining-budget');
+            const badgeElem = document.getElementById('cart-count-badge');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            const totalItemCount = cart.reduce((sum, entry) => sum + entry.count, 0);
+            const totalCost = getCartTotal();
+
+            badgeElem.innerText = totalItemCount;
+            totalElem.innerText = `€${totalCost.toFixed(2)}`;
+            subtotalElem.innerText = `€${totalCost.toFixed(2)}`;
+            remainingElem.innerText = `€${getRemainingBudget().toFixed(2)}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 space-y-3">
+                        <div class="text-slate-300 text-5xl"><i class="fa-solid fa-basket-shopping"></i></div>
+                        <p class="text-slate-500 text-sm font-medium">Je winkelmand is nog leeg.</p>
+                        <p class="text-slate-400 text-xs">Kies wat coole kleren uit de winkel!</p>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+                checkoutBtn.className = "w-full bg-slate-200 text-slate-400 font-extrabold py-3.5 rounded-2xl cursor-not-allowed transition-all flex items-center justify-center gap-2";
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            checkoutBtn.className = "w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold py-3.5 rounded-2xl shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 text-base";
+
+            container.innerHTML = '';
+            cart.forEach(entry => {
+                const itemRow = document.createElement('div');
+                itemRow.className = "flex items-center gap-3 bg-slate-50 p-2.5 rounded-2xl border border-slate-200";
+                itemRow.innerHTML = `
+                    <img src="${entry.item.img}" alt="${entry.item.name}" class="w-14 h-14 object-cover rounded-xl shrink-0 border border-slate-200">
+                    <div class="flex-grow min-w-0">
+                        <h4 class="font-extrabold text-xs text-slate-900 truncate">${entry.item.name}</h4>
+                        <div class="text-xs text-slate-500 font-semibold">€${entry.item.price.toFixed(2)} / st.</div>
+                    </div>
+                    <div class="flex items-center gap-1.5 bg-white border border-slate-200 rounded-xl px-2 py-1">
+                        <button onclick="updateCartQuantity(${entry.item.id}, -1)" class="text-slate-500 hover:text-rose-600 px-1 font-bold text-xs">-</button>
+                        <span class="text-xs font-black px-1">${entry.count}</span>
+                        <button onclick="updateCartQuantity(${entry.item.id}, 1)" class="text-slate-500 hover:text-emerald-600 px-1 font-bold text-xs">+</button>
+                    </div>
+                `;
+                container.appendChild(itemRow);
+            });
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        function triggerCheckout() {
+            if (cart.length === 0) return;
+            toggleCartModal();
+            document.getElementById('reveal-modal').classList.remove('hidden');
+        }
+
+        function closeRevealModal() {
+            document.getElementById('reveal-modal').classList.add('hidden');
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 transition-all transform translate-y-0 opacity-100 border border-slate-700";
+            toast.innerHTML = `<i class="fa-solid fa-circle-info text-pink-400"></i> ${msg}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 2300);
+        }
+
+        // ==========================================
+        // 4. ETHICSCAN DASHBOARD & ANALYSIS
+        // ==========================================
+        function showEthicScan() {
+            closeRevealModal();
+
+            document.getElementById('shop-view').classList.add('hidden');
+            document.getElementById('ethics-view').classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Calculate Metrics
+            let totalItemsCount = 0;
+            let totalWater = 0;
+            let totalSweatHours = 0;
+            let weightedTierSum = 0;
+            let tierDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+
+            cart.forEach(entry => {
+                totalItemsCount += entry.count;
+                totalWater += (entry.item.water * entry.count);
+                totalSweatHours += (entry.item.sweatHours * entry.count);
+                weightedTierSum += (entry.item.tier * entry.count);
+                tierDistribution[entry.item.tier] += entry.count;
+            });
+
+            const avgTier = weightedTierSum / totalItemsCount;
+
+            // Update Metrics UI
+            document.getElementById('stat-spent').innerText = `€${getCartTotal().toFixed(2)}`;
+            document.getElementById('stat-items-count').innerText = totalItemsCount;
+            document.getElementById('stat-water').innerText = `${totalWater.toLocaleString('nl-BE')} L`;
+            document.getElementById('stat-hours').innerText = `${totalSweatHours.toFixed(1)} Uur`;
+
+            // Labor Score
+            const laborScore = Math.round(
+                ((tierDistribution[1] * 0 +
+                  tierDistribution[2] * 20 +
+                  tierDistribution[3] * 50 +
+                  tierDistribution[4] * 85 +
+                  tierDistribution[5] * 100) / totalItemsCount)
+            );
+
+            document.getElementById('stat-labor').innerText = `${laborScore}% Eerlijk`;
+
+            // Overall Grade
+            const gradeElem = document.getElementById('overall-grade');
+            const gradeLabel = document.getElementById('overall-grade-label');
+
+            if (avgTier >= 4.5) {
+                gradeElem.innerText = "A+";
+                gradeElem.className = "text-6xl font-black mb-1 text-teal-400";
+                gradeLabel.innerText = "Circulair & Ethisch Kampioen! 🌿";
+                gradeLabel.className = "text-xs font-bold px-3 py-1 rounded-full bg-teal-900/60 text-teal-200 border border-teal-500/40";
+            } else if (avgTier >= 3.8) {
+                gradeElem.innerText = "B";
+                gradeElem.className = "text-6xl font-black mb-1 text-emerald-400";
+                gradeLabel.innerText = "Duurzaam & Bewust 🟢";
+                gradeLabel.className = "text-xs font-bold px-3 py-1 rounded-full bg-emerald-900/60 text-emerald-200 border border-emerald-500/40";
+            } else if (avgTier >= 2.8) {
+                gradeElem.innerText = "C";
+                gradeElem.className = "text-6xl font-black mb-1 text-yellow-400";
+                gradeLabel.innerText = "Conventioneel / Gemiddeld 🟡";
+                gradeLabel.className = "text-xs font-bold px-3 py-1 rounded-full bg-yellow-900/60 text-yellow-200 border border-yellow-500/40";
+            } else if (avgTier >= 1.8) {
+                gradeElem.innerText = "D";
+                gradeElem.className = "text-6xl font-black mb-1 text-orange-400";
+                gradeLabel.innerText = "Fast Fashion Belasting 🔴";
+                gradeLabel.className = "text-xs font-bold px-3 py-1 rounded-full bg-orange-900/60 text-orange-200 border border-orange-500/40";
+            } else {
+                gradeElem.innerText = "F";
+                gradeElem.className = "text-6xl font-black mb-1 text-rose-500";
+                gradeLabel.innerText = "Sweatshop & Onethische Impact 🔴🔴";
+                gradeLabel.className = "text-xs font-bold px-3 py-1 rounded-full bg-rose-900/60 text-rose-200 border border-rose-500/40";
+            }
+
+            renderEthicItemsList();
+        }
+
+        function renderEthicItemsList() {
+            const container = document.getElementById('ethics-items-list');
+            container.innerHTML = '';
+
+            cart.forEach(entry => {
+                const item = entry.item;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-sm space-y-4";
+
+                const tierInfo = getTierBadge(item.tier);
+
+                card.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+                        <div class="flex items-center gap-4">
+                            <img src="${item.img}" alt="${item.name}" class="w-16 h-16 object-cover rounded-2xl shrink-0 border border-slate-200 shadow-sm">
+                            <div>
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h4 class="font-black text-slate-900 text-base sm:text-lg">${item.name}</h4>
+                                    <span class="text-xs bg-slate-100 text-slate-700 font-extrabold px-2.5 py-0.5 rounded-full">${entry.count}x gekocht</span>
+                                </div>
+                                <div class="text-xs text-slate-500 font-semibold">Prijs per stuk: €${item.price.toFixed(2)}</div>
+                            </div>
+                        </div>
+
+                        <!-- Tier Badge -->
+                        <div class="${tierInfo.bg} ${tierInfo.text} border ${tierInfo.border} px-4 py-2 rounded-2xl flex items-center gap-2 self-start sm:self-auto shadow-sm">
+                            <span class="text-lg">${tierInfo.icon}</span>
+                            <div>
+                                <div class="text-[10px] uppercase font-extrabold tracking-wider">Ethiektrap Tier ${item.tier}</div>
+                                <div class="text-xs font-black">${tierInfo.title}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Breakdown Details Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 space-y-1">
+                            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-industry text-slate-500"></i> Productie & Arbeid
+                            </div>
+                            <p class="text-slate-600"><strong>Herkomst:</strong> ${item.country}</p>
+                            <p class="text-slate-600"><strong>Geschat Uurloon:</strong> ${item.wage}</p>
+                        </div>
+
+                        <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-100 space-y-1">
+                            <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-droplet text-sky-600"></i> Grondstof & Milieu
+                            </div>
+                            <p class="text-slate-600"><strong>Samenstelling:</strong> ${item.material}</p>
+                            <p class="text-slate-600"><strong>Waterverbruik:</strong> ${item.water} Liter / stuk</p>
+                        </div>
+
+                        <div class="bg-amber-50/80 border border-amber-200 p-3.5 rounded-2xl space-y-1 md:col-span-1">
+                            <div class="font-extrabold text-amber-900 flex items-center gap-1.5">
+                                <i class="fa-solid fa-lightbulb text-amber-500"></i> Wist je dat? (Zedenleer 1A)
+                            </div>
+                            <p class="text-slate-700 leading-relaxed text-[11px] font-medium">
+                                ${item.facts}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function getTierBadge(tier) {
+            switch(tier) {
+                case 1:
+                    return {
+                        title: "Extreem Onethisch (Sweatshop)",
+                        icon: "🔴🔴",
+                        bg: "bg-rose-50",
+                        text: "text-rose-700",
+                        border: "border-rose-200"
+                    };
+                case 2:
+                    return {
+                        title: "Fast Fashion (Onethisch)",
+                        icon: "🔴",
+                        bg: "bg-orange-50",
+                        text: "text-orange-700",
+                        border: "border-orange-200"
+                    };
+                case 3:
+                    return {
+                        title: "Conventioneel (Matig)",
+                        icon: "🟡",
+                        bg: "bg-amber-50",
+                        text: "text-amber-700",
+                        border: "border-amber-200"
+                    };
+                case 4:
+                    return {
+                        title: "Duurzaam & Bewust",
+                        icon: "🟢",
+                        bg: "bg-emerald-50",
+                        text: "text-emerald-700",
+                        border: "border-emerald-200"
+                    };
+                case 5:
+                    return {
+                        title: "Circulair & Fairtrade Leader",
+                        icon: "🟢✨",
+                        bg: "bg-teal-50",
+                        text: "text-teal-700",
+                        border: "border-teal-200"
+                    };
+            }
+        }
+
+        function toggleTeacherTips() {
+            const content = document.getElementById('teacher-tips-content');
+            const icon = document.getElementById('teacher-accordion-icon');
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function resetShop() {
+            cart = [];
+            updateBudgetUI();
+            updateCartUI();
+            document.getElementById('ethics-view').classList.add('hidden');
+            document.getElementById('shop-view').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showToast("Winkelmand gereset! Kies nu een nieuw plan 🛒");
+        }
+    </script>
+</body>
+</html>
